@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little Forever ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#080207;
+    color:white;
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+}
+
+.screen{
+    min-height:100vh;
+    width:100%;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.screen.active{
+    display:flex;
+    animation:fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(.98)}
+    to{opacity:1;transform:scale(1)}
+}
+
+/* Background */
+
+.background{
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(circle at 50% 40%, rgba(255,60,130,.20), transparent 35%),
+        radial-gradient(circle at 20% 80%, rgba(170,30,100,.14), transparent 30%),
+        linear-gradient(145deg,#10030b,#260817,#080207);
+    z-index:-2;
+}
+
+.background::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        radial-gradient(circle,rgba(255,255,255,.35) 1px,transparent 1px);
+    background-size:70px 70px;
+    opacity:.12;
+}
+
+/* Floating hearts */
+
+.hearts{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+}
+
+.heart{
+    position:absolute;
+    bottom:-50px;
+    font-size:20px;
+    opacity:0;
+    animation:floatHeart linear infinite;
+}
+
+@keyframes floatHeart{
+    0%{
+        transform:translateY(0) scale(.7) rotate(0);
+        opacity:0;
+    }
+    15%{opacity:.7}
+    80%{opacity:.45}
+    100%{
+        transform:translateY(-115vh) scale(1.4) rotate(25deg);
+        opacity:0;
+    }
+}
+
+/* Main card */
+
+.content{
+    width:min(92%,650px);
+    text-align:center;
+    position:relative;
+    z-index:2;
+}
+
+.small{
+    font-size:12px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:#f6b6cb;
+    margin-bottom:20px;
+}
+
+.script{
+    font-family:'Great Vibes',cursive;
+    font-size:clamp(55px,13vw,105px);
+    line-height:1;
+    color:#fff;
+    text-shadow:
+        0 0 20px rgba(255,90,150,.5),
+        0 0 60px rgba(255,30,110,.25);
+}
+
+.subtitle{
+    margin-top:20px;
+    color:#f6dce6;
+    font-family:'Cormorant Garamond',serif;
+    font-size:23px;
+    font-style:italic;
+}
+
+/* Buttons */
+
+.btn{
+    margin-top:35px;
+    border:1px solid rgba(255,190,215,.5);
+    background:linear-gradient(135deg,rgba(255,70,130,.22),rgba(255,255,255,.05));
+    color:white;
+    padding:15px 34px;
+    border-radius:50px;
+    font-family:'Poppins',sans-serif;
+    font-size:14px;
+    letter-spacing:1px;
+    cursor:pointer;
+    backdrop-filter:blur(12px);
+    box-shadow:
+        0 0 25px rgba(255,60,130,.18),
+        inset 0 0 20px rgba(255,255,255,.04);
+    transition:.35s;
+}
+
+.btn:hover{
+    transform:translateY(-3px) scale(1.03);
+    box-shadow:0 0 35px rgba(255,60,130,.35);
+    border-color:#ff9fc0;
+}
+
+/* Surprise */
+
+.surprise{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(30px,7vw,52px);
+    line-height:1.2;
+    color:#fff0f5;
+}
+
+/* Password */
+
+.password-card{
+    width:min(90%,430px);
+    padding:45px 30px;
+    border-radius:30px;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,170,200,.22);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 80px rgba(0,0,0,.5),
+               0 0 50px rgba(255,40,120,.1);
+}
+
+.lock{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.input{
+    width:100%;
+    margin-top:25px;
+    padding:15px 20px;
+    border-radius:50px;
+    border:1px solid rgba(255,180,210,.25);
+    background:rgba(0,0,0,.25);
+    color:white;
+    outline:none;
+    text-align:center;
+    font-size:15px;
+}
+
+.input::placeholder{
+    color:#bca7ae;
+}
+
+.error{
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    border-radius:20px;
+    background:rgba(255,70,130,.08);
+    border:1px solid rgba(255,130,170,.2);
+    animation:pop .5s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(.8);opacity:0}
+    70%{transform:scale(1.05)}
+    100%{transform:scale(1);opacity:1}
+}
+
+.error-title{
+    font-family:'Great Vibes',cursive;
+    font-size:32px;
+    color:#ffb3cb;
+}
+
+/* Notes */
+
+.note-container{
+    width:min(92%,650px);
+}
+
+.note{
+    padding:45px 30px;
+    min-height:280px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    border-radius:28px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
+    border:1px solid rgba(255,180,210,.2);
+    backdrop-filter:blur(20px);
+    box-shadow:0 30px 90px rgba(0,0,0,.45),
+               0 0 50px rgba(255,50,130,.08);
+}
+
+.note-number{
+    color:#eaa7bd;
+    font-size:11px;
+    letter-spacing:4px;
+    margin-bottom:20px;
+}
+
+.note h2{
+    font-family:'Great Vibes',cursive;
+    font-size:48px;
+    font-weight:400;
+    color:#ffd8e5;
+}
+
+.note p{
+    margin-top:20px;
+    color:#eadbe1;
+    font-family:'Cormorant Garamond',serif;
+    font-size:23px;
+    line-height:1.55;
+}
+
+.next{
+    margin-top:25px;
+}
+
+/* Gallery */
+
+.media-container{
+    width:min(94%,650px);
+}
+
+.section-title{
+    font-family:'Great Vibes',cursive;
+    font-size:58px;
+    color:#ffd6e3;
+}
+
+.section-sub{
+    color:#d8c4cc;
+    font-family:'Cormorant Garamond',serif;
+    font-size:20px;
+    margin-top:8px;
+}
+
+.media-card{
+    margin-top:30px;
+    border-radius:28px;
+    overflow:hidden;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,180,210,.18);
+    box-shadow:0 25px 80px rgba(0,0,0,.5);
+}
+
+.media-placeholder{
+    height:55vh;
+    min-height:350px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:
+        radial-gradient(circle,rgba(255,70,130,.14),transparent 45%),
+        #12060d;
+}
+
+.media-placeholder span{
+    font-size:55px;
+    opacity:.8;
+}
+
+.media-caption{
+    padding:25px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:25px;
+    color:#f8e7ed;
+}
+
+/* Video */
+
+video{
+    width:100%;
+    display:block;
+    max-height:65vh;
+    background:#050205;
+}
+
+/* Final */
+
+.final-heart{
+    font-size:70px;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.15)}
+}
+
+.final-message{
+    font-family:'Cormorant Garamond',serif;
+    font-size:25px;
+    line-height:1.6;
+    color:#f5dfe7;
+    margin-top:25px;
+}
+
+@media(max-width:500px){
+    .note p{font-size:20px}
+    .section-title{font-size:48px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background"></div>
+<div class="hearts" id="hearts"></div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- 1. OPENING -->
+<section class="screen active" id="opening">
+    <div class="content">
+        <div class="small">A little something from my heart</div>
+
+        <div class="script">
+            Our Story
+        </div>
+
+        <div class="subtitle">
+            “Some surprises are worth waiting for… ❤️”
+        </div>
+
+        <button class="btn" onclick="showScreen('surprise')">
+            A Surprise For You 💌
+        </button>
+    </div>
+</section>
+
+
+<!-- 2. SURPRISE -->
+<section class="screen" id="surprise">
+    <div class="content">
+
+        <div class="small">Wait…</div>
+
+        <div class="surprise">
+            Itni kya jaldi hai? 🥺❤️
+        </div>
+
+        <div class="subtitle">
+            Pehle thoda sa sabr, begum… ✨
+        </div>
+
+        <button class="btn" onclick="showScreen('password')">
+            Theek Hai… 😌
+        </button>
+
+    </div>
+</section>
+
+
+<!-- 3. PASSWORD -->
+<section class="screen" id="password">
+
+    <div class="password-card">
+
+        <div class="lock">🔐</div>
+
+        <div class="small">One little secret</div>
+
+        <h2 class="surprise" style="font-size:38px;">
+            Pehle password… ❤️
+        </h2>
+
+        <p class="subtitle">
+            Hamari special date kya thi?
+        </p>
+
+        <input
+            class="input"
+            id="passwordInput"
+            type="password"
+            placeholder="Enter the date…"
+        >
+
+        <button class="btn" onclick="checkPassword()">
+            Unlock My Heart 💗
+        </button>
+
+        <div class="error" id="errorBox">
+
+            <div class="error-title">
+                Kuch nahi… khair hai begum 🥺
+            </div>
+
+            <p style="margin-top:10px;color:#e8d6dd;">
+                Mujhse dobara password pooch lo… ❤️
+            </p>
+
+            <button class="btn" onclick="resetPassword()">
+                Dobara poochti hoon 💕
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- 4. NOTES -->
+<section class="screen" id="notes">
+
+    <div class="note-container">
+
+        <div class="note" id="noteBox">
+
+            <div class="note-number" id="noteNumber">
+                NOTE 01
+            </div>
+
+            <h2 id="noteTitle">
+                For My Begum ❤️
+            </h2>
+
+            <p id="noteText">
+                I know I'm a little late…
+                and I'm really sorry. 🥺❤️
+                I took some time because I wanted to make
+                something special for you.
+            </p>
+
+            <button class="btn next" onclick="nextNote()">
+                Next ❤️
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- 5. PHOTOS -->
+<section class="screen" id="photos">
+
+    <div class="media-container">
+
+        <div class="small">Our memories</div>
+
+        <div class="section-title">
+            Our Moments ❤️
+        </div>
+
+        <div class="section-sub">
+            Ten little memories… one beautiful story.
+        </div>
+
+        <div class="media-card">
+
+            <div class="media-placeholder" id="photoArea">
+                <span>📸</span>
+                <p style="margin-top:15px;color:#cbb7bf;">
+                    Photo 01
+                </p>
+            </div>
+
+            <div class="media-caption" id="photoCaption">
+                “Some moments are impossible to forget. ❤️”
+            </div>
+
+        </div>
+
+        <button class="btn" onclick="nextPhoto()">
+            Next Memory 💕
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- 6. VIDEOS -->
+<section class="screen" id="videos">
+
+    <div class="media-container">
+
+        <div class="small">And then…</div>
+
+        <div class="section-title">
+            Our Little Videos 🎥
+        </div>
+
+        <div class="section-sub">
+            Because some memories deserve to move.
+        </div>
+
+        <div class="media-card">
+
+            <div class="media-placeholder" id="videoArea">
+                <span>🎥</span>
+                <p style="margin-top:15px;color:#cbb7bf;">
+                    Video 01
+                </p>
+            </div>
+
+            <div class="media-caption" id="videoCaption">
+                “Every second feels a little more special with you. ❤️”
+            </div>
+
+        </div>
+
+        <button class="btn" onclick="nextVideo()">
+            Next Video 💗
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- 7. FINAL -->
+<section class="screen" id="final">
+
+    <div class="content">
+
+        <div class="final-heart">
+            ❤️
+        </div>
+
+        <div class="script">
+            Happy Anniversary
+        </div>
+
+        <div class="final-message">
+            Here's to our memories,
+            our little moments,
+            our silly smiles,
+            and everything still waiting for us. ❤️
+            <br><br>
+            <b>Forever sounds beautiful…</b>
+            <br>
+            especially if it's with you. 💕
+        </div>
+
+        <div class="subtitle">
+            With all my love,
+            <br>
+            <span style="font-family:'Great Vibes';font-size:38px;">
+                Yours ❤️
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* -------------------------
+   HEARTS
+------------------------- */
+
+const hearts = document.getElementById("hearts");
+
+const heartSymbols = ["♥","♡","❤","💗","💖"];
+
+for(let i=0;i<35;i++){
+
+    const h = document.createElement("div");
+
+    h.className="heart";
+
+    h.innerText =
+        heartSymbols[Math.floor(Math.random()*heartSymbols.length)];
+
+    h.style.left = Math.random()*100 + "%";
+    h.style.animationDuration =
+        (8 + Math.random()*10) + "s";
+
+    h.style.animationDelay =
+        Math.random()*10 + "s";
+
+    h.style.fontSize =
+        (12 + Math.random()*20) + "px";
+
+    hearts.appendChild(h);
+}
+
+
+/* -------------------------
+   SCREEN SWITCH
+------------------------- */
+
+function showScreen(id){
+
+    document.querySelectorAll(".screen")
+        .forEach(s => s.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    startMusic();
+}
+
+
+/* -------------------------
+   MUSIC
+------------------------- */
+
+const music = document.getElementById("music");
+
+function startMusic(){
+
+    music.volume = 0.35;
+
+    music.play().catch(()=>{
+        // Browser may require user interaction.
+    });
+}
+
+
+/* -------------------------
+   PASSWORD
+------------------------- */
+
+function checkPassword(){
+
+    const input =
+        document.getElementById("passwordInput").value.trim();
+
+    const error =
+        document.getElementById("errorBox");
+
+    if(input === "24September2025"){
+
+        error.style.display="none";
+
+        setTimeout(()=>{
+            showScreen("notes");
+        },300);
+
+    }else{
+
+        error.style.display="block";
+
+        document.getElementById("passwordInput").value="";
+
+    }
+}
+
+
+function resetPassword(){
+
+    document.getElementById("errorBox")
+        .style.display="none";
+
+    document.getElementById("passwordInput")
+        .focus();
+}
+
+
+/* -------------------------
+   NOTES
+------------------------- */
+
+const notes = [
+
+{
+title:"For My Begum ❤️",
+text:"I know I'm a little late… and I'm really sorry. 🥺❤️ I took some time because I wanted to make something special for you."
+},
+
+{
+title:"You Know What? 💕",
+text:"I could have simply written Happy Anniversary… but you deserve more than just a few words."
+},
+
+{
+title:"So I Tried… ✨",
+text:"I made this little place for our memories, our moments and all the feelings that are sometimes difficult to put into words."
+},
+
+{
+title:"One More Thing… 🥺",
+text:"Thank you for being a beautiful part of my story. Every little moment with you means more than you know."
+},
+
+{
+title:"And Finally… ❤️",
+text:"This isn't just a website. It's a tiny piece of my heart that I made especially for you."
+}
+
+];
+
+let noteIndex=0;
+
+function nextNote(){
+
+    noteIndex++;
+
+    if(noteIndex >= notes.length){
+
+        showScreen("photos");
+
+        return;
+    }
+
+    const box =
+        document.getElementById("noteBox");
+
+    box.style.opacity="0";
+    box.style.transform="translateY(15px)";
+
+    setTimeout(()=>{
+
+        document.getElementById("noteNumber")
+            .innerText =
+            "NOTE " +
+            String(noteIndex+1).padStart(2,"0");
+
+        document.getElementById("noteTitle")
+            .innerText =
+            notes[noteIndex].title;
+
+        document.getElementById("noteText")
+            .innerText =
+            notes[noteIndex].text;
+
+        box.style.opacity="1";
+        box.style.transform="translateY(0)";
+
+    },350);
+
+}
+
+
+/* -------------------------
+   PHOTOS
+------------------------- */
+
+const photos = [
+
+    {file:"photo1.jpg", text:"Some moments are impossible to forget. ❤️"},
+    {file:"photo2.jpg", text:"A memory I would choose again and again. 💕"},
+    {file:"photo3.jpg", text:"Your smile has a way of making everything better. 🥺"},
+    {file:"photo4.jpg", text:"One picture… a thousand feelings. ❤️"},
+    {file:"photo5.jpg", text:"I wish I could pause moments like this forever. ✨"},
+    {file:"photo6.jpg", text:"Another little piece of our story. 💗"},
+    {file:"photo7.jpg", text:"You make ordinary moments feel special. 🌹"},
+    {file:"photo8.jpg", text:"This one will always have a place in my heart. ❤️"},
+    {file:"photo9.jpg", text:"Still smiling because of this memory. 🥰"},
+    {file:"photo10.jpg", text:"And this is only one chapter of our story. 💕"}
+
+];
+
+let photoIndex=0;
+
+function nextPhoto(){
+
+    photoIndex++;
+
+    if(photoIndex >= photos.length){
+
+        showScreen("videos");
+
+        return;
+    }
+
+    const area =
+        document.getElementById("photoArea");
+
+    area.innerHTML = `
+        <img
+            src="${photos[photoIndex].file}"
+            style="width:100%;height:100%;object-fit:cover;"
+        >
+    `;
+
+    document.getElementById("photoCaption")
+        .innerText =
+        photos[photoIndex].text;
+}
+
+
+/* -------------------------
+   VIDEOS
+------------------------- */
+
+const videos = [
+
+    {file:"video1.mp4", text:"Every second feels a little more special with you. ❤️"},
+    {file:"video2.mp4", text:"A moment I could watch a hundred times. 💕"},
+    {file:"video3.mp4", text:"Our memories have their own little magic. ✨"},
+    {file:"video4.mp4", text:"And somehow… you make every memory better. 🥺"},
+    {file:"video5.mp4", text:"Here's to all the moments still waiting for us. ❤️"}
+
+];
+
+let videoIndex=0;
+
+function nextVideo(){
+
+    videoIndex++;
+
+    if(videoIndex >= videos.length){
+
+        showScreen("final");
+
+        return;
+    }
+
+    const area =
+        document.getElementById("videoArea");
+
+    area.innerHTML = `
+        <video controls autoplay playsinline>
+            <source src="${videos[videoIndex].file}" type="video/mp4">
+        </video>
+    `;
+
+    document.getElementById("videoCaption")
+        .innerText =
+        videos[videoIndex].text;
+}
+
+</script>
+
+</body>
+  </html>
